@@ -82,7 +82,7 @@ var parametrosPie = {
 
 
 
-function graficaGenoma(datos){
+function graficaGenoma(datos,inicio, final){
   console.log(datos);
   var dataGrafica ={categories:[],menor:[],mayor:[],promedio:[]};
   $.each(datos, function(i, item){
@@ -100,21 +100,18 @@ function graficaGenoma(datos){
   tplMenor.series.push({name:'Promedio.',data:dataGrafica.promedio});
   console.log(tplMenor);
   $('#genoma-menor').highcharts(tplMenor);
-  var dataInicio =[],dataFin=[];
-  $.each(poblacionAlInicio[0], function(i, item){
-    var cromosom = {name:'x',y:item.fitness};
-    dataInicio.push(cromosom);
-  });
-  $.each(poblacion, function(i, item){
-    var cromosom = {name:'x',y:item.fitness};
-    dataFin.push(cromosom);
-  });
-  var tplInicio = jQuery.extend(true, {}, parametrosPie);
-  tplInicio.title.text = 'Distribución Inicio';
-  tplInicio.series[0].data =dataInicio;
-  $('#genoma-inicio').highcharts(tplInicio);
-  var tplFin = jQuery.extend(true, {}, parametrosPie);
-  tplFin.title.text = 'Distribución Final';
-  tplFin.series[0].data =dataFin;
-  $('#genoma-final').highcharts(tplFin);
+
 }
+
+
+function graficaPastel(div, datos, title){
+    var dataInicio =[];
+    for(i=0;i<datos.length;i++){
+        dataInicio.push({name: datos[i].cromosomaindice, y:datos[i].cromosomaTotal});
+    }
+    var tplInicio = jQuery.extend(true, {}, parametrosPie);
+    tplInicio.title.text = title;
+    tplInicio.series[0].data =dataInicio;
+    $(div).highcharts(tplInicio);
+}
+
