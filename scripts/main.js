@@ -17,7 +17,7 @@ $(document).ready(function(){
   $('form').submit(function(){
     return false;
   });
-  $('.form-validate').parsley();
+
   //iniciaPoblacion();
   $('#activa-evo').on('click', evoluciona);
 });
@@ -37,7 +37,7 @@ function iniciaPoblacion(){
     }
     poblacion.push(objetoInicial);
   }
-  poblacionAlInicio.push(poblacion); //Guarda la poblacion al inicio para comparar.
+  poblacionAlInicio = poblacion; //Guarda la poblacion al inicio para comparar.
   console.log(poblacion);
 }
 
@@ -47,7 +47,7 @@ function evaluaPoblacion(){
   sumaTotal = 0;
   for(i=0;i<poblacion.length;i++){
     poblacion[i].cromosomaBin = poblacion[i].cromosomaArray.join('');
-    poblacion[i].cromosomaTotal = ((parseInt(poblacion[i].cromosomaBin, 2))/(Math.pow(2, 30)));
+    poblacion[i].cromosomaTotal = ((parseInt(poblacion[i].cromosomaBin, 2))/1073741824);
     sumaTotal+=poblacion[i].cromosomaTotal;
   }
   generaFitness();
@@ -64,34 +64,46 @@ function generaFitness(){
 }
 
 function obtieneDatosGeneracion(){
-  var menor=0,mayor= 0,totPromedio=0;
+  var menor=1,mayor= 0,totPromedio= 0,imayor= 0, imenor=0;
   for(i=0;i<poblacion.length;i++){
-    if(poblacion[i].fitness<=99999999999999999999999999){menor=poblacion[i].fitness}
-    if(poblacion[i].fitness>mayor){mayor=poblacion[i].fitness}
-    totPromedio+=poblacion[i].fitness;
+    if(poblacion[i].cromosomaTotal<=menor){menor=poblacion[i].cromosomaTotal;imenor=poblacion[i].cromosomaindice;}
+    if(poblacion[i].cromosomaTotal>mayor){mayor=poblacion[i].cromosomaTotal;imayor=poblacion[i].cromosomaindice;}
+    totPromedio+=poblacion[i].cromosomaTotal;
   }
-  return {menor:menor,mayor:mayor,promedio:(totPromedio/poblacion.length)};
+  return {menor:menor,mayor:mayor,promedio:(totPromedio/poblacion.length),imayor:imayor,imenor:imenor};
 }
 
 function imprimeTabla(){
   $('#resultados tbody').html('');
+    $('.results').html('');
   fitnessAcumulado = 0;
   $.each(poblacion,function(i,item){
     fitnessAcumulado+=item.fitness;
     var html = '<tr><td>'+i+'</td><td>'+item.cromosomaBin+'</td><td>'+item.cromosomaTotal+'</td><td>'+item.fitness+'</td><td>'+fitnessAcumulado+'</td></tr>';
     $('#resultados tbody').append(html);
   });
+    /*
+    console.log(datosGeneraciones[poblacionInicial-1]);
+    console.log(poblacionInicial-1);
+    $('.results').append('<p>Fitness Mayor (Genoma '+datosGeneraciones[poblacionInicial-1].imayor+') = '+datosGeneraciones[poblacionInicial-1].mayor+'</p>');
+    $('.results').append('<p>Fitness Menor (Genoma '+datosGeneraciones[poblacionInicial-1].imenor+') = '+datosGeneraciones[poblacionInicial-1].menor+'</p>');
+    $('.results').append('<p>Mejor Genoma = '+poblacion[datosGeneraciones[poblacionInicial-1].imayor].cromosomaBin+'</p>');
+    */
 }
 
+
+
 function evoluciona(){
-  var form = $('#formulario').parsley().validate();
-  if(form){
-    iniciaPoblacion();
+
     poblacionInicial = $('#poblacion').val();
     pc = $('#cruzamiento').val();
     pm = $('#mutacion').val();
     generaciones = $('#generaciones').val();
+    iniciaPoblacion();
+    evaluaPoblacion();
     datosGeneraciones = [];
+    console.table(poblacionAlInicio);
+    graficaPastel('#genoma-inicio', poblacionAlInicio, 'Distribución al inicio');
     for(var k=0;k<generaciones;k++){
       evaluaPoblacion();
 
@@ -106,11 +118,13 @@ function evoluciona(){
 
       evaluaPoblacion();
       datosGeneraciones.push(obtieneDatosGeneracion());
-
     }
+    console.table(poblacion);
     imprimeTabla();
     graficaGenoma(datosGeneraciones);
-  }
+    graficaPastel('#genoma-final', poblacion, 'Distribución al final');
+
+
 }
 
 function seleccionPadres(){
@@ -198,6 +212,7 @@ function sustituyePoblacion(nuevos){
   poblacion[nuevos.A.cromosomaindice] = nuevos.A;
   poblacion[nuevos.B.cromosomaindice] = nuevos.B;
   console.log('--- Insertados en la poblacion ---');
+  //console.table(poblacion);
 }
 
 //Genera un número aleatorio.
