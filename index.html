@@ -1,2 +1,40 @@
-<!doctype html><html class="no-js" lang="es"><head><meta charset="utf-8"><meta name="description" content="Demo de algoritmos geneticos"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algoritmos Geneticos JS</title><link rel="apple-touch-icon" href="apple-touch-icon.png"><!-- Place favicon.ico in the root directory --><link rel="stylesheet" href="styles/vendor.css"><link rel="stylesheet" href="styles/main.css"><script src="scripts/vendor/modernizr.js"></script></head><body><nav><div class="nav-wrapper"><a href="#" class="brand-logo">Algortimo Genetico</a></div></nav><div class="app"><div class="row"><div class="col s4"><form id="formulario" class="form-validate"><div class="form-cont"><h5>Parametros</h5><div class="input-field col s12"><input id="poblacion" type="text" value="50" class="validate" required data-parsley-type="integer"><label for="poblacion">Poblacion</label></div><div class="input-field col s12"><input id="generaciones" type="text" value="30" class="validate" required data-parsley-type="integer"><label for="generaciones">Generaciones</label></div><div class="input-field col s12"><input id="mutacion" type="number" value="0.70" step="0.01" class="validate"><label for="mutacion">Mutacion</label></div><div class="input-field col s12"><input id="cruzamiento" type="number" value="0.0555" step="0.001" class="validate"><label for="cruzamiento">Cruzamiento</label></div><p align="center"><button class="btn waves-effect blue lighten-2" id="activa-evo">Evoluciona!</button></p></div></form><div class="results"></div><div id="genoma-inicio" class="pie"></div><div id="genoma-final" class="pie"></div></div><div class="col s8"><div id="genoma-menor" class="grafica-vector"></div><table id="resultados" class="responsive-table"><thead><tr><th>Indice</th><th>Individuos</th><th>Calificacion</th><th>Prob.Selección</th><th>Cal.Acumulado</th></tr></thead><tbody></tbody></table></div></div></div><script src="scripts/vendor.js"></script><script src="https://code.highcharts.com/highcharts.js"></script><script src="scripts/main.js"></script>
+<!doctype html><html class="no-js" lang="es"><head><meta charset="utf-8"><meta name="description" content="Demo de algoritmos geneticos"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algoritmos Geneticos JS</title><link rel="apple-touch-icon" href="apple-touch-icon.png"><!-- Place favicon.ico in the root directory --><link rel="stylesheet" href="styles/vendor.css"><link rel="stylesheet" href="styles/main.css"><script src="scripts/vendor/modernizr.js"></script></head><body>
+<nav><div class="nav-wrapper"><a href="#" class="brand-logo">Algortimo Genetico</a></div></nav><div class="app"><div class="row"><div class="col s4"><form id="formulario" class="form-validate"><div class="form-cont"><h5>Parametros</h5><div class="input-field col s12"><input id="poblacion" type="text" value="50" class="validate" required data-parsley-type="integer"><label for="poblacion">Poblacion</label></div><div class="input-field col s12"><input id="generaciones" type="text" value="30" class="validate" required data-parsley-type="integer"><label for="generaciones">Generaciones</label></div><div class="input-field col s12"><input id="mutacion" type="number" value="0.70" step="0.01" class="validate"><label for="mutacion">Cruzamiento</label></div><div class="input-field col s12"><input id="cruzamiento" type="number" value="0.0555" step="0.001" class="validate"><label for="cruzamiento">Mutacion</label></div><p align="center"><button class="btn waves-effect blue lighten-2" id="activa-evo">Evoluciona!</button></p></div></form><div class="results blue darken-1 res-ag toHide"></div><div id="genoma-inicio" class="pie res-ag toHide"></div><div id="genoma-final" class="pie res-ag toHide"></div></div>
+    <div class="col s8">
+        <div id="genoma-menor" class="grafica-vector res-ag toHide"></div>
+        <div class="row res-ag toHide">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#poblacion-original">Poblacion original</a></li>
+                    <li class="tab col s3"><a class="active" href="#poblacion-final">Poblacion Final</a></li>
+                </ul>
+            </div>
+            <div id="poblacion-original" class="col s12">
+                <table id="resultados-orig" class="responsive-table"><thead><tr><th>Indice</th><th>Individuos</th><th>Calificacion</th><th>Prob.Selección</th><th>Cal.Acumulado</th></tr></thead><tbody></tbody></table>
+            </div>
+            <div id="poblacion-final" class="col s12">
+                <table id="resultados" class="responsive-table"><thead><tr><th>Indice</th><th>Individuos</th><th>Calificacion</th><th>Prob.Selección</th><th>Cal.Acumulado</th></tr></thead><tbody></tbody></table>
+            </div>
+        </div>
+
+
+    </div></div></div>
+
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h5 class="white-text">MACHINE LEARNING Y TRATAMIENTO DE DATOS </h5>
+                <p class="grey-text text-lighten-4">El alumno deberá explicar, analizar, implementar y evaluar una máquina evolutiva basada en algoritmos genéticos. La máquina evolutiva deberá evolucionar a 30 unos en uno o varios de sus cromosomas (función objetivo), se generara una población inicial de 50 cromosomas, cada cromosoma contiene una longitud de 30 genes (cada gen representa un 1 o un 0 en el cromosoma y es generado aleatoriamente). La selección se hará por ruleta, el cruzamiento se efectuara inicialmente con probabilidad de cruza pc = 0.70 y la mutación se efectuara con una probabilidad de mutación pm = 0.0555.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2014 DESARROLLO DE TRABAJO. MÁQUINAS EVOLUTIVAS.
+            <a class="grey-text text-lighten-4 right" href="#!">Equipo 1.</a>
+        </div>
+    </div>
+</footer>
+<script src="scripts/vendor.js"></script><script src="https://code.highcharts.com/highcharts.js"></script><script src="scripts/main.js"></script>
 <script src="scripts/graficas.js"></script></body></html>
